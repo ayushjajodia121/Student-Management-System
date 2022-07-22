@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jajodia.sms.entity.Student;
 import com.jajodia.sms.service.StudentService;
+import com.jajodia.sms.service.SubjectService;
 
 @Controller
 public class StudentController {
@@ -17,10 +18,14 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
+	@Autowired
+	private SubjectService subjectService;
+	
 	@GetMapping("/allStudents")
 	public String fetchAllStudents(Model model)
 	{
 		model.addAttribute("students",studentService.fetchAllStudents());
+		
 		return "students";
 	}
 	
@@ -49,6 +54,7 @@ public class StudentController {
 	{
 		Student st = new Student();
 		model.addAttribute("student", st);
+		model.addAttribute("subjects",subjectService.fetchAllSubjects());
 		return "create_student";
 	}
 	
@@ -86,6 +92,7 @@ public class StudentController {
 		studentService.updateStatus(id);
 		return "redirect:/pendingFeesStudents";
 	}
+	
 	
 
 }

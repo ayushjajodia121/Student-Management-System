@@ -8,7 +8,7 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
 	crossorigin="anonymous">
 </head>
-<body>
+<body style="background-color:#e8d58c;">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
   <!-- Brand -->
   <a class="navbar-brand" href="#">Student Management System</a>
@@ -27,13 +27,16 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{pendingFeesStudents}">Pending Fees</a>
       </li>
+       <li class="nav-item">
+        <a class="nav-link" th:href="@{listOfSubjects}">List Of Subjects</a>
+      </li>
      
     </ul>
      </div>
     <form class="form-inline  my-2 my-lg-0" action="/allStudentsByName" >
     <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword" th:value="${keyword}" >
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
+    </form>
  
 </nav>
 <br>

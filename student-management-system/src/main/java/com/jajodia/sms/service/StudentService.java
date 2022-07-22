@@ -1,12 +1,15 @@
 package com.jajodia.sms.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jajodia.sms.entity.Student;
+import com.jajodia.sms.entity.Subject;
 import com.jajodia.sms.repository.StudentRepository;
+
 
 @Service
 public class StudentService {
@@ -18,6 +21,7 @@ public class StudentService {
 	//add a student to database
 	public Student addStudent(Student student)
 	{
+		
 		return studentRepository.save(student);
 	}
 	//fetch All Students
@@ -70,11 +74,26 @@ public class StudentService {
 	{
 		return studentRepository.findStudentByFeeStatus(status);
 	}
+	
+	//update fees status
 	public Student updateStatus(int id) {
 		Student stOld = studentRepository.findById(id).orElseThrow(null);
 		stOld.setFees(true);
 		return studentRepository.save(stOld);
 		
+	}
+	
+	//add subjects to a student
+	public Student addSubjects(int id,List<Integer> ids)
+	{
+		Optional<Student> stuOpt = studentRepository.findById(id);
+		if(!stuOpt.isPresent()) {
+			throw new RuntimeException("Student not available");
+		}
+		Student studentOld = stuOpt.get();
+		List<Subject> subjects = studentRepository.findSubjectByIds(ids);
+		studentOld.setSubjects(subjects);
+		return studentRepository.save(studentOld);
 	}
 
 }
