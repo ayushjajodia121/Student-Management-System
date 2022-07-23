@@ -93,6 +93,12 @@ public class StudentController {
 		return "redirect:/pendingFeesStudents";
 	}
 	
+	@GetMapping("/editStudent/allStudents")
+	public String fetchStudents()
+	{
+		return "redirect:/allStudents";
+	}
+	
 	
 
 }

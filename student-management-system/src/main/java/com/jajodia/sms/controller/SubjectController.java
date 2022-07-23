@@ -29,5 +29,11 @@ public class SubjectController {
 		model.addAttribute("students",subjectService.fetchStudentsBySubjects(id));
 		return "listOfStudents";
 	}
+	
+	@GetMapping("/subjectStudents/listOfSubjects")
+	public String previousPage()
+	{
+		return "redirect:/listOfSubjects";
+	}
 
 }
