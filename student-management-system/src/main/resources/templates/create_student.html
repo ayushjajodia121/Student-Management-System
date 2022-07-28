@@ -35,7 +35,7 @@
 			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 				<h1 class="">Create A New Student</h1>
 				<div class="card-body">
-					<form th:action="@{/addStudent}" th:object="${student}" method="POST" class="card p-3 bg-light">
+					<form  novalidate th:action="@{/addStudent}" th:object="${student}" method="POST" class="card p-3 bg-light" onsubmit="return validate()">
 						<div class="form-group">
 							<lable><strong>Full Name</strong></lable>
 							<input style="border:1px solid black"
@@ -43,9 +43,10 @@
 								name="fullName"
 								th:field="*{fullName}"
 								placeholder="Enter Student's full name"
-								class="form-control "
+								class="form-control name-field"
 								required="required"
 							></input>
+							<small class="name-field-msg form-text  ml-2"></small>
 						</div>
 						<div class="form-group">
 							<lable><strong>Stream</strong></lable>
@@ -54,9 +55,10 @@
 								name="stream"
 								th:field="*{stream}"
 								placeholder="Enter Student's stream"
-								class="form-control"
+								class="form-control stream-field"
 								required="required"
 							></input>
+							<small class="stream-field-msg form-text  ml-2"></small>
 						</div>
 						<div class="form-group">
 							<lable><strong>Email</strong></lable>
@@ -65,9 +67,10 @@
 								name="email"
 								th:field="*{email}"
 								placeholder="Enter Student's  email!"
-								class="form-control"
+								class="form-control email-field"
 								required="required"
 							></input>
+							<small class="email-field-msg form-text text-danger ml-2">Error message</small>
 						</div>
 						<div class="form-group">
 							<lable><strong>Contact Number</strong></lable>
@@ -76,9 +79,10 @@
 								name="contactNumber"
 								th:field="*{contactNumber}"
 								placeholder="Enter Student's  contact Number"
-								class="form-control"
+								class="form-control contact-field"
 								required="required"
 							></input>
+							<small class="contact -field-msg form-text text-danger ml-2">Error message</small>
 						</div>
 						<div class="form-group">
 							<lable><strong>Fees status</strong></lable>
@@ -87,13 +91,13 @@
 								name="fees"
 								th:field="*{fees}"
 								placeholder="Enter Student's  fees status"
-								class="form-control"
+								class="form-control "
 							></input>
 						</div>
 						<div class="form-group">
 							    <select class="form-control" th:field="*{subjects}" multiple="multiple" style="border:1px solid black">
 							    <option value="0">Select Subjects</option>
-							    <option th:each="subject : ${subjects}" th:value="${subject.subjectId}" th:text="${subject.name}"></option> 
+							    <option th:each="subject : ${subjects}" th:value="${subject.subjectId}" th:text="${subject.name}"></option>
 							    </select>
 						</div>
 
@@ -109,5 +113,64 @@
 			</div>
 		</div>
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+  /*jquery and javascript validations*/	
+	<script>
+		function validate(){
+			
+			let flag = false;
+			let name = $('.name-field ').val();
+			let email = $('.email-field').val();
+			let stream = $('.stream-field').val();
+			let contact = $('.contact-field').val();
+			let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+			
+			//console.log(name);
+			if(name == '' || name == undefined)
+				{
+					$('.name-field-msg').html("Name cannot be left Empty").addClass('text-danger');
+					flag=false;
+				}
+			else
+				{
+					$('.name-field-msg').html("Okay!!").removeClass('text-danger').addClass('text-success');
+					flag=true;
+				}
+			if(email == '' || email == undefined)
+				{
+					$('.email-field-msg').html("Email should be filled").addClass('text-danger');
+					flag=false;
+				}
+			else if(emailRegex.test(email) == false)
+				{
+					$('.email-field-msg').html("Email should be in proper format").addClass('text-danger');
+					flag=false;	
+				}
+			else
+				{
+					$('.email-field-msg').html("Okay!!").removeClass('text-danger').addClass('text-success');
+					flag=true;	
+				}
+			//console.log(name);
+			if(name == '' || name == undefined)
+				{
+					$('.stream-field-msg').html("Name cannot be left Empty").addClass('text-danger');
+					flag=false;
+				}
+			else
+				{
+					$('.stream-field-msg').html("Okay!!").removeClass('text-danger').addClass('text-success');
+					flag=true;
+				}
+			
+			
+			return flag;
+		}
+	</script>
 </body>
 </html>

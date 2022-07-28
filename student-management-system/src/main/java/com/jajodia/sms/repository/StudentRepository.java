@@ -34,6 +34,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 //	
 //	@Query("SELECT * FROM Student WHERE id IN (select id from Student.Subject WHERE subjectId= :sl)")
 //	public List<Student> fetchStudentsBySubjects(@Param("sl") Integer sl);
-	
+//	@Query("Insert into Student (name,email,address)")
 
 }

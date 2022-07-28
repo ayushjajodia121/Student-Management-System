@@ -8,8 +8,8 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
 	crossorigin="anonymous">
 </head>
-<body style="background-color:#e8d58c;">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
+<body style="background-color:#272537;">
+<nav style="background-color:black"class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
   <!-- Brand -->
   <a class="navbar-brand" href="#">Student Management System</a>
 
@@ -42,7 +42,7 @@
 <br>
 <div class="container">
 		<div class="row">
-		<h2>List Of Students for :<span th:text="${nameOfSubject}"></span></h2>
+		<h2 style="color:white">&nbsp;&nbsp;&nbsp;List Of Students for :&nbsp;&nbsp;<span th:text="${nameOfSubject}"></span></h2>
 		</div>
 		<table class="table table-striped table-dark table-bordered">
 			<thead >
@@ -65,7 +65,7 @@
 		</table>
 	</div>
 	<div>
-		<a th:href="@{listOfSubjects}" class="btn btn-primary" style="background-color:black;margin-left:39px">BACK</a>
+		<a th:href="@{listOfSubjects}" class="btn btn-primary" style="background-color:black;margin-left:126px">BACK</a>
 	</div>
 
 

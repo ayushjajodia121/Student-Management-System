@@ -21,7 +21,7 @@ public class StudentService {
 	//add a student to database
 	public Student addStudent(Student student)
 	{
-		
+//		studentRepository.addAddress()
 		return studentRepository.save(student);
 	}
 	//fetch All Students

@@ -1,5 +1,7 @@
 package com.jajodia.sms.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,12 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jajodia.sms.entity.Student;
 import com.jajodia.sms.service.StudentService;
 import com.jajodia.sms.service.SubjectService;
 
 @Controller
+
 public class StudentController {
 	
 	@Autowired
@@ -21,17 +26,24 @@ public class StudentController {
 	@Autowired
 	private SubjectService subjectService;
 	
+	Logger logger = LoggerFactory.getLogger(StudentController.class);
+
+	
 	@GetMapping("/allStudents")
 	public String fetchAllStudents(Model model)
 	{
+		logger.info("inside Student Controller: fetchAllStudents() method");
+		logger.info("fetching all enrolled students ");
 		model.addAttribute("students",studentService.fetchAllStudents());
 		
 		return "students";
 	}
 	
-	@GetMapping("/allStudentsByName")
+	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value ="/allStudentsByName")
 	public String fetchAllStudentsByName(Model model,String keyword)
 	{
+		logger.info("inside Student Controller: fetchAllStudentsByName() method");
+		logger.info("fetching all enrolled students By name ");
 		if(keyword!=null) {
 		model.addAttribute("students",studentService.getStudentByName(keyword));
 		return "student_by_name";}
@@ -44,7 +56,16 @@ public class StudentController {
 	@PostMapping("/addStudent")
 	public String addStudent(@ModelAttribute("student") Student student)
 	{
-		studentService.addStudent(student);
+		logger.info("inside Student Controller: addStudent() POST method");
+		
+		Student st=studentService.addStudent(student);
+		if(st!=null)
+		{
+			logger.info("student saved successfully");
+		}else {
+			logger.warn("student not saved");
+		}
+		logger.info("redirecting to allStudents Page");
 		return "redirect:/allStudents";
 		
 	}
@@ -52,6 +73,9 @@ public class StudentController {
 	@GetMapping("/addStudent")
 	public String addStudent(Model model)
 	{
+		logger.info("inside Student Controller: addStudent() GET method");
+
+		logger.info("redirecting to create_student.html page");
 		Student st = new Student();
 		model.addAttribute("student", st);
 		model.addAttribute("subjects",subjectService.fetchAllSubjects());
@@ -59,16 +83,25 @@ public class StudentController {
 	}
 	
 	@GetMapping("/editStudent/{id}")
-	public String editStdentForm(@PathVariable int id, Model model)
+	public String editStudentForm(@PathVariable int id, Model model)
 	{
+		logger.info("inside Student Controller: editStudentForm() GET method");
+
 		model.addAttribute("student", studentService.fetchStudentByid(id));
+		
+		logger.info("redirecting to edit_student.html page");
+		
 		return "edit_student";
 	}
 	
 	@PostMapping("/editStudent/{id}")
 	public String editStudent(@PathVariable int id,@ModelAttribute("student") Student student)
 	{
+		logger.info("inside Student Controller: editStudent() POST method");
 		studentService.updateStudent(id, student);
+		
+		logger.info("redirecting to students.html page after updating details");
+
 		return "redirect:/allStudents";
 	}
 	 
