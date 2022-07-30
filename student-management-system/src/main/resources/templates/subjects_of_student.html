@@ -8,8 +8,8 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
 	crossorigin="anonymous">
 </head>
-<body style="background-color:#17898a;">
-<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between" style="position:fixed;width:100%">
+<body style="background-color:#52743d;">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
   <!-- Brand -->
   <a class="navbar-brand" href="#">Student Management System</a>
 
@@ -27,58 +27,42 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{pendingFeesStudents}">Pending Fees</a>
       </li>
-       <li class="nav-item">
-        <a class="nav-link" th:href="@{listOfSubjects}">List Of Subjects</a>
-      </li>
+      <!--  <li class="nav-item">
+        <a class="nav-link" th:href="@{pendingFeesStudents}">Pending Fees</a>
+      </li> --> 
      
     </ul>
      </div>
     <form class="form-inline  my-2 my-lg-0" action="/allStudentsByName" >
     <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword" th:value="${keyword}" >
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+  </form>
  
 </nav>
 <br>
-
-	<div class="container">
+<div class="container">
 		<div class="row">
-		<h2>List of Students</h2>
-		</div>
-		<div class="row">
-			<div class="col-lg-3">
-				<a th:href="@{/addStudent}" class="btn btn-primary bt-sm mb-3" style="background-color:black">Add Student</a>
-			</div>
+		<h2>List of Subjects</h2>
 		</div>
 		<table class="table table-striped table-dark table-bordered">
 			<thead >
 				<tr>
-					<th>StudentId</th>
-					<th>StudentName</th>
-					<th>StudentStream</th>
-					<th>StudentEmail</th>
-					<th>ContactNumber</th>
-					<th>Subjects</th>
-					<th>Actions</th>
+					<th>SubjectId</th>
+					<th>SubjectName</th>
+					<th>Semester</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="student:${students}">
-					<td th:text="${student.id}"></td>
-					<td th:text="${student.fullName}"></td>
-					<td th:text="${student.stream}"></td>
-					<td th:text="${student.email}"></td>
-					<td th:text="${student.contactNumber}"></td>
-					<td><a th:href="@{/subjectsOfStudents/{id}(id=${student.id})}" class="btn btn-primary">GET</a></td>
-					<td>
-						<a th:href="@{/editStudent/{id}(id=${student.id})}" class="btn btn-primary">Update</a>
-						<a th:href="@{/deleteStudent/{id}(id=${student.id})}" class="btn btn-danger">Delete</a>
-					</td>
+				<tr th:each="subject:${subjects}">
+					<td th:text="${subject.subjectId}"></td>
+					<td th:text="${subject.name}"></td>
+					<td th:text="${subject.semester}"></td>
 				</tr>
 			</tbody>
 			
 		</table>
 	</div>
+
 
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jajodia.sms.exception.ResourceNotFoundException;
 import com.jajodia.sms.entity.Student;
 import com.jajodia.sms.entity.Subject;
 import com.jajodia.sms.repository.StudentRepository;
@@ -52,6 +53,7 @@ public class StudentService {
 			stOld.setContactNumber(st.getContactNumber());
 			stOld.setStream(st.getStream());
 			stOld.setFees(st.isFees());
+			stOld.setSubjects(st.getSubjects());
 			return studentRepository.save(stOld);
 		}
 	}
@@ -77,7 +79,7 @@ public class StudentService {
 	
 	//update fees status
 	public Student updateStatus(int id) {
-		Student stOld = studentRepository.findById(id).orElseThrow(null);
+		Student stOld = studentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User"," id ", id));
 		stOld.setFees(true);
 		return studentRepository.save(stOld);
 		

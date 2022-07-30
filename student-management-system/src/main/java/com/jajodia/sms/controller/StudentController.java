@@ -3,14 +3,17 @@ package com.jajodia.sms.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.jajodia.sms.entity.Student;
 import com.jajodia.sms.service.StudentService;
@@ -34,6 +37,8 @@ public class StudentController {
 	{
 		logger.info("inside Student Controller: fetchAllStudents() method");
 		logger.info("fetching all enrolled students ");
+//		String str = null;
+//		System.out.println(str.length());
 		model.addAttribute("students",studentService.fetchAllStudents());
 		
 		return "students";
@@ -88,10 +93,20 @@ public class StudentController {
 		logger.info("inside Student Controller: editStudentForm() GET method");
 
 		model.addAttribute("student", studentService.fetchStudentByid(id));
+		model.addAttribute("subjects",subjectService.fetchAllSubjects() );
 		
 		logger.info("redirecting to edit_student.html page");
 		
 		return "edit_student";
+	}
+	
+	//get subjects associated with a particular student
+	@GetMapping("/subjectsOfStudents/{id}")
+	public String getSubjectsOfStudent(@PathVariable int id,Model model)
+	{
+		Student st = studentService.fetchStudentByid(id);
+		model.addAttribute("subjects", st.getSubjects());
+		return "listOfSubjects";
 	}
 	
 	@PostMapping("/editStudent/{id}")
@@ -126,12 +141,21 @@ public class StudentController {
 		return "redirect:/pendingFeesStudents";
 	}
 	
-	@GetMapping("/editStudent/allStudents")
-	public String fetchStudents()
-	{
-		return "redirect:/allStudents";
-	}
 	
+	
+//	@GetMapping("/editStudent/allStudents")
+//	public String fetchStudents()
+//	{
+//		return "redirect:/allStudents";
+//	}
+
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(value=Exception.class)
+	public String exceptionHandler(Model m)
+	{
+		m.addAttribute("msg", "Exception has occured");
+		return "exception-page";
+	}
 	
 
 }
