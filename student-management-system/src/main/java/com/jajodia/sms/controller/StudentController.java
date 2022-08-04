@@ -45,7 +45,7 @@ public class StudentController {
 	}
 	
 //	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value ="/allStudentsByName")
-	@PostMapping("/allStudentsByName")
+	@GetMapping("/allStudentsByName")
 	public String fetchAllStudentsByName(Model model,String keyword)
 	{
 		logger.info("inside Student Controller: fetchAllStudentsByName() method");
