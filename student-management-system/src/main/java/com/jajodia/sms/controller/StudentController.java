@@ -44,7 +44,8 @@ public class StudentController {
 		return "students";
 	}
 	
-	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value ="/allStudentsByName")
+//	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, value ="/allStudentsByName")
+	@PostMapping("/allStudentsByName")
 	public String fetchAllStudentsByName(Model model,String keyword)
 	{
 		logger.info("inside Student Controller: fetchAllStudentsByName() method");
@@ -148,14 +149,14 @@ public class StudentController {
 //	{
 //		return "redirect:/allStudents";
 //	}
-
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(value=Exception.class)
-	public String exceptionHandler(Model m)
-	{
-		m.addAttribute("msg", "Exception has occured");
-		return "exception-page";
-	}
+//
+//	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+//	@ExceptionHandler(value=Exception.class)
+//	public String exceptionHandler(Model m)
+//	{
+//		m.addAttribute("msg", "Exception has occured");
+//		return "exception-page";
+//	}
 	
 
 }
